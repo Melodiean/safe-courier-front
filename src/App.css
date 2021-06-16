@@ -1,0 +1,57 @@
+.App {
+  text-align: center;
+}
+
+.land {
+  background-color: "teal";
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.land img {
+  width: 50vw;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+input {
+  margin: 0.3em;
+  padding: 0.7em;
+  width: 40vw;
+  outline-color: #3199bc;
+}
+
+input:valid {
+  outline-color: green;
+}
+input:invalid {
+  outline-color: red;
+}
+
+button,
+.ll {
+  margin: 1em;
+  padding: 1em;
+  border: none;
+  border-radius: 0.5em;
+  background-color: #3199bc;
+  color: white;
+  font-weight: 550;
+}
+
+.ll {
+  text-decoration: none;
+  padding: 0.8em;
+  margin-top: 1em;
+  background-color: #3199bc;
+  color: white;
+}
+
+.pimg {
+  width: 9em;
+}
