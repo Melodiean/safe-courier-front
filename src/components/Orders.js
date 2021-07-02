@@ -4,7 +4,7 @@ import { AuthContext } from "../context/context";
 
 function Ords() {
   const history = useHistory();
-  const {user} = useContext(AuthContext);
+  const [user] = useContext(AuthContext);
   const uid = user.UID;
   const role = user.role;
   const [loading, setLoading] = useState(true);
