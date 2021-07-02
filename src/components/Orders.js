@@ -21,19 +21,19 @@ function Ords() {
   };
 
   const f = async () => {
-    let userUrl = `https://mnscapi.herokuapp.com/api/v1/users/${uid}/parcels`;
-
-    let adminUrl = `https://mnscapi.herokuapp.com/api/v1/parcels`;
-
-    let url;
-
-    if (role === "admin") {
-      url = adminUrl;
-    } else {
-      url = userUrl;
-    }
-
+    
     if (uid) {
+      let userUrl = `https://mnscapi.herokuapp.com/api/v1/users/${uid}/parcels`;
+  
+      let adminUrl = `https://mnscapi.herokuapp.com/api/v1/parcels`;
+  
+      let url;
+  
+      if (role === "admin") {
+        url = adminUrl;
+      } else {
+        url = userUrl;
+      }
       let res = await fetch(url, {
         headers: {
           "Content-Type": "application/json",
