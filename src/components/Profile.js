@@ -1,25 +1,25 @@
-import React from "react";
-// import user from "../images/user.png";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../context/context";
 
 export default function Profile() {
+  const {user} = useContext(AuthContext);
+  if (user.username === "")
+    return (
+      <div className="boxed">
+        <p>Loading...</p>
+      </div>
+    );
   return (
     <div className="boxed boxtile">
-      <h1>Profile</h1>
-      {/* <img src={user} alt="avatar by Freepik" className="pimg" /> */}
       <div>
-          <h3>Personal Info</h3>
-          <div className="boxtile">
-          <p>Username</p>
-          {/* <p>Password</p> */}
-          <p>Email</p>
-          </div>
+        <h3>Personal Info</h3>
+        <div className="boxtile">
+          <p>Username: {user.username}</p>
+          <p>Email: {user.email}</p>
+        </div>
       </div>
-      <div>
-          <h3>My orders</h3>
-          <div>
-
-          </div>
-      </div>
+      <Link to="/orders">View Orders</Link>
     </div>
   );
 }

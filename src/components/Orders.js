@@ -1,48 +1,113 @@
-import React from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
+import { AuthContext } from "../context/context";
 
-export default function About() {
+function Ords() {
+  const history = useHistory();
+  const {user} = useContext(AuthContext);
+  const uid = user.UID;
+  const role = user.role;
+  const [loading, setLoading] = useState(true);
+
+  const [ord, setOrds] = useState([]);
+
+  // eslint-disable-next-line no-unused-vars
+  const {parcel, setParcel} = useContext(AuthContext);
+
+  const handleOrder = (o) => {
+    let oid = o.currentTarget.id;
+    setParcel({oid});
+    history.push("/details");
+  };
+
+  const f = async () => {
+    let userUrl = `http://localhost:3020/api/v1/users/${uid}/parcels`;
+
+    let adminUrl = `http://localhost:3020/api/v1/parcels`;
+
+    let url;
+
+    if (role === "admin") {
+      url = adminUrl;
+    } else {
+      url = userUrl;
+    }
+
+    if (uid) {
+      let res = await fetch(url, {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        credentials: "include",
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          setOrds(data);
+        })
+        .catch((er) => console.log(er.message))
+        .finally(() => {
+          setLoading(false);
+        });
+
+      return res;
+    }
+  };
+
+  useEffect(() => {
+    f();
+    return setLoading(true)
+  }
+  ,[]
+  );
+
+  // &&
+
+  if (loading)
+    return (
+      <div className="">
+        <p>Loading...</p>
+      </div>
+    );
   return (
-    <div className="boxed">
-      <h1>View all Orders</h1>
-      <div>
-        <div className="boxtile">
-          <div>
-            <span>Parcel ID</span>
-            <span>parcelID</span>
+    <div>
+      {ord.map((od) => (
+        <div key={od._id} className="boxo" id={od._id} onClick={handleOrder}>
+          <div className="boxor">
+            <span>{od.orderDate.substr(0, 10)}</span>
           </div>
-          <div>
-            <span>Order Date</span>
-            <span>orderDate</span>
+          <div className="boxod">
+            <span>Shipped:</span>
+            <span>{od.shipDate}</span>
           </div>
-          <div>
-            <span>Ship Date</span>
-            <span>shipDate</span>
+          <div className="boxod">
+            <span>TrackID:</span>
+            <span>{od.trackingNo}</span>
           </div>
-          <div>
-            <span>Sender</span>
-            <span>sender</span>
+          <div className="boxod">
+            <span>Weight: </span>
+            <span>{od.weight} Kg</span>
           </div>
-          <div>
-            <span>Location</span>
-            <span>currentLocation</span>
-          </div>
-          <div>
-            <span>Destination</span>
-            <span>destination</span>
-          </div>
-          <div>
-            <span>Status</span>
-            <span>status</span>
-          </div>
-          <div>
-            <span>Weight</span>
-            <span>weight</span>
-          </div>
-          <div>
-            <span>Price</span>
-            <span>price</span>
+          <div className="boxod">
+            <span>Price: </span>
+            <span>{od.cost} UGX</span>
           </div>
         </div>
+      ))}
+    </div>
+  );
+}
+
+export default function Orders() {
+  return (
+    <div className="boxed">
+      <h1>Orders</h1>
+      <Ords />
+      <div className="boxodo">
+        <Link to="/order">Make an Order!</Link>
+        <Link to="/track">Track a Parcel!</Link>
       </div>
     </div>
   );

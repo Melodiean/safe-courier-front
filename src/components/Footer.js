@@ -8,7 +8,7 @@ export default function Footer(){
     <p>For News and Articles</p>
     <form>
         <input type="text" placeholder="Enter Email"/>
-        <button>Subscribe</button>
+        <button className="footb">Subscribe</button>
         </form>
 </div>
        
