@@ -10,7 +10,7 @@ function Parcel() {
 
   const f = async () => {
     if (pid) {
-      let res = await fetch(`http://mnscapi.herokuapp.com:3020/api/v1/parcels/${pid}`, {
+      let res = await fetch(`https://mnscapi.herokuapp.com:3020/api/v1/parcels/${pid}`, {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",

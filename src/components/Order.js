@@ -32,7 +32,7 @@ export default function Order(props) {
       body: JSON.stringify(uData),
     };
 
-    fetch("http://mnscapi.herokuapp.com:3020/api/v1/parcels", reqOptions)
+    fetch("https://mnscapi.herokuapp.com:3020/api/v1/parcels", reqOptions)
       .then((res) => res.json())
       .then((data) => {
         if (data.success)

@@ -14,7 +14,7 @@ export const AuthProvider = (props) => {
   const [parcel, setParcel] = useState("");
 
   const authUser = async () => {
-    const res = await fetch("http://mnscapi.herokuapp.com:3020/api/v1/auth/profile", {
+    const res = await fetch("https://mnscapi.herokuapp.com:3020/api/v1/auth/profile", {
       method: "GET",
       credentials: "include",
     })
