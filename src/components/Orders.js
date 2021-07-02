@@ -21,9 +21,9 @@ function Ords() {
   };
 
   const f = async () => {
-    let userUrl = `https://mnscapi.herokuapp.com:3020/api/v1/users/${uid}/parcels`;
+    let userUrl = `https://mnscapi.herokuapp.com/api/v1/users/${uid}/parcels`;
 
-    let adminUrl = `https://mnscapi.herokuapp.com:3020/api/v1/parcels`;
+    let adminUrl = `https://mnscapi.herokuapp.com/api/v1/parcels`;
 
     let url;
 

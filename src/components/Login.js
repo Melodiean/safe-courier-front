@@ -12,7 +12,7 @@ export default function Login() {
 
   const [err, setErr] = useState("");
   
-  const url = "https://mnscapi.herokuapp.com:3020/api/v1/auth/login";
+  const url = "https://mnscapi.herokuapp.com/api/v1/auth/login";
 
   const userInfo = {
     email: "",
