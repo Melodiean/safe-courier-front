@@ -50,9 +50,6 @@ export default function Register() {
       body: JSON.stringify(Qdata),
     };
 
-    console.log(Qdata);
-    console.log(admin);
-
     fetch(url, reqOptions)
       .then((res) => {
         return res.json();

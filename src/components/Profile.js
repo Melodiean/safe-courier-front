@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../context/context";
 
 export default function Profile() {
-  const {user} = useContext(AuthContext);
+  const [user] = useContext(AuthContext);
   if (user.username === "")
     return (
       <div className="boxed">
