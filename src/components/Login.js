@@ -8,7 +8,7 @@ import Order from "./Order";
 export default function Login() {
   // eslint-disable-next-line no-unused-vars
   const [isAuth, setIsAuth] = useContext(AuthContext);
-  const [user] = useContext(AuthContext);
+  const [user, setUser] = useContext(AuthContext);
 
   const [err, setErr] = useState("");
   
@@ -44,6 +44,7 @@ export default function Login() {
       .then((data) => {
         if (data.isAuth) {
           setIsAuth(true);
+          setUser(data);
         }
 else{
 // setTimeout(
