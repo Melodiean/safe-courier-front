@@ -42,7 +42,7 @@ export default function Register() {
       Qdata = {...Qdata}
     }
     
-    const url = "http://localhost:3020/api/v1/auth/signup";
+    const url = "http://mnscapi.herokuapp.com:3020/api/v1/auth/signup";
 
     const reqOptions = {
       method: "POST",

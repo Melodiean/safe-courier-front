@@ -5,16 +5,17 @@ import { Link
 import { AuthContext } from "../context/context";
 
 export default function Header() {
-  const {user} = useContext(AuthContext);
-  const {setUser} = useContext(AuthContext);
+  const [user] = useContext(AuthContext)
+  // const [ setUser] = useContext(AuthContext);
+  // const {setUser} = useContext(AuthContext);
 // const history = useHistory();
 
   const logout = async () => {
-    await fetch("http://localhost:3020/api/v1/auth/logout", {
+    await fetch("https://mnscapi.herokuapp.com/api/v1/auth/logout", {
       method: "GET",
       credentials: "include",
     }).then(res=> res.json()).then((d)=>{
-      setUser({username:""})
+      // setUser({username:""})
       // history.push("/");
     console.log(user)
     }).catch((er)=>console.log(er.message))

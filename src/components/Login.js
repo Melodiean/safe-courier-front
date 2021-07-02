@@ -7,13 +7,12 @@ import Order from "./Order";
 
 export default function Login() {
   // eslint-disable-next-line no-unused-vars
-  const isAuth = useContext(AuthContext);
-  const {setIsAuth} = isAuth;
-  const {user} = useContext(AuthContext);
+  const [isAuth, setIsAuth] = useContext(AuthContext);
+  const [user] = useContext(AuthContext);
 
   const [err, setErr] = useState("");
   
-  const url = "http://localhost:3020/api/v1/auth/login";
+  const url = "http://mnscapi.herokuapp.com:3020/api/v1/auth/login";
 
   const userInfo = {
     email: "",
