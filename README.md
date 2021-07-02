@@ -1,4 +1,4 @@
 # safe-courier-front
 Parcel Delivery Service
 
-[VIEW PROJECT](https://mnsafecourier.netlify.com) 
+[VIEW PROJECT](https://mnsafecourier.netlify.app) 
