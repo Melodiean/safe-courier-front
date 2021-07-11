@@ -10,8 +10,8 @@ export default function Order(props) {
   });
 
   // eslint-disable-next-line no-unused-vars
-  const {parcel, setParcel} = useContext(AuthContext);
-  const [msg,setMsg] = useState("");
+  const { parcel, setParcel } = useContext(AuthContext);
+  const [msg, setMsg] = useState("");
 
   const handleChange = (el) => {
     const { name, value } = el.target;
@@ -32,13 +32,12 @@ export default function Order(props) {
       body: JSON.stringify(uData),
     };
 
-    fetch("https://mnscapi.herokuapp.com/api/v1/parcels", reqOptions)
+    fetch("/parcels", reqOptions)
       .then((res) => res.json())
       .then((data) => {
-        if (data.success)
-          console.log(data);
-          setParcel(data);
-          setMsg(data.message);
+        if (data.success) console.log(data);
+        setParcel(data);
+        setMsg(data.message);
       })
       .catch((er) => console.log({ Error: er.message }));
 
@@ -48,8 +47,8 @@ export default function Order(props) {
   return (
     <div className="boxed">
       <h1>Make an order!</h1>
-    {msg?<p>{msg}</p>:<span></span>}
-      <form onSubmit={handleSubmit}>
+      {msg ? <p>{msg}</p> : <span></span>}
+      <form onSubmit={handleSubmit} autoComplete="off">
         <input
           type="number"
           name="weight"
@@ -72,9 +71,7 @@ export default function Order(props) {
           onChange={handleChange}
         />
 
-        <button type="submit">
-        Order Now
-        </button>
+        <button type="submit">Order Now</button>
         <Link to="/track">Track Parcel</Link>
       </form>
     </div>

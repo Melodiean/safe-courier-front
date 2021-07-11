@@ -6,8 +6,7 @@ import delivery from "../images/delivery.png";
 import Order from "./Order";
 
 export default function Landing() {
-  const [ user ] = useContext(AuthContext);
-
+  const { user } = useContext(AuthContext);
   if (user.username!=="") return <Order />;
   return (
     <div className="land">
@@ -21,7 +20,7 @@ export default function Landing() {
         With Safe Courier, you can make delivery orders and keep track of your
         parcel wherever you are!
       </p>
-      <div>
+      <div className="landb">
         <Link to="register">
           <button>SIGNUP</button>
         </Link>

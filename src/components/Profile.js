@@ -3,8 +3,9 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../context/context";
 
 export default function Profile() {
-  const [user] = useContext(AuthContext);
-  if (user.username === "")
+  const { user, isAuth } = useContext(AuthContext);
+
+  if (isAuth === false)
     return (
       <div className="boxed">
         <p>Loading...</p>

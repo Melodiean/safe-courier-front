@@ -2,15 +2,27 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/context";
 
+function Box(props) {
+  let text = props.text;
+  let dbc = props.dbc;
+
+  return (
+    <div className="boxtile">
+      <p className="hightext">{text}</p>
+      <span className="lowtext">{dbc}</span>
+    </div>
+  );
+}
+
 function Parcel() {
   const { parcel } = useContext(AuthContext);
-  const [loading, setLoading] = useState(true);
-  const [order, setOrder] = useState("");
   let pid = parcel.oid;
+
+  const [order, setOrder] = useState("");
 
   const f = async () => {
     if (pid) {
-      let res = await fetch(`https://mnscapi.herokuapp.com/api/v1/parcels/${pid}`, {
+      let res = await fetch(`/parcels/${pid}`, {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
@@ -20,13 +32,9 @@ function Parcel() {
           return res.json();
         })
         .then((data) => {
-          setLoading(false);
           setOrder(data);
         })
         .catch((er) => console.log(er.message));
-      // .finally(() => {
-      //   setLoading(false);
-      // });
 
       return res;
     }
@@ -34,43 +42,51 @@ function Parcel() {
 
   useEffect(() => {
     f();
-    return setLoading(true);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
-  if (loading)
-    return (
-      <div className="boxed">
-        <p>Loading...</p>
-      </div>
-    );
   return (
     <div>
-      <div className="boxtile">
-        <p className="hightext">Track No.</p>
-        <span className="lowtext">{order.trackingNo}</span>
-      </div>
-      <div className="boxtile">
-        <p className="hightext">Status</p>
-        <span className="lowtext">{order.status}</span>
-      </div>
-      <div className="boxtile">
-        <p className="hightext">Weight</p>
-        <span className="lowtext">{order.weight} Kg</span>
-      </div>
-      <div className="boxtile">
-        <p className="hightext">Cost</p>
-        <span className="lowtext">{order.cost} UGX</span>
-      </div>
+      <Box text="Track No." dbc={order.trackingNo} />
+      <Box text="Status" dbc={order.status} />
+      <Box text="Weight" dbc={order.weight} />
+      <Box text="Cost" dbc={order.cost} />
+      <Box text="From" dbc={order.location} />
+      <Box text="To" dbc={order.destination} />
+    </div>
+  );
+}
 
-      <div className="boxtile">
-        <p className="hightext">From</p>
-        <span className="lowtext">{order.location}</span>
-      </div>
-      <div className="boxtile">
-        <p className="hightext">To</p>
-        <span className="lowtext">{order.destination}</span>
-      </div>
+function Button(props) {
+  const { parcel } = useContext(AuthContext);
+  const pid = parcel.oid;
+  const text = props.text;
+  const url = `/parcels/${pid}${props.url}`;
+
+  const [msg, setMsg] = useState("");
+
+  const reqOptions = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+  };
+
+  const onClick = async () => {
+    await fetch(url, reqOptions)
+      .then((r) => r.json())
+      .then((d) => {
+        setMsg(d.message);
+      })
+      .catch((er) => console.log({ Error: er.message }));
+  };
+
+  return (
+    <div>
+      {msg ? <p>{msg}</p> : <p></p>}
+      <button onClick={onClick} url={url}>
+        {text}
+      </button>
     </div>
   );
 }
@@ -78,6 +94,7 @@ function Parcel() {
 export default function OrderDetails() {
   const { user } = useContext(AuthContext);
   let role = user.role;
+
   if (!role) {
     return (
       <div className="boxed box">
@@ -91,16 +108,14 @@ export default function OrderDetails() {
       <Parcel />
       {role === "user" ? (
         <div>
-          <div>
-            <button>Change Destination</button>
-            <button>Cancel Order</button>
-          </div>
+          <Button text="Change Destination" url="/destination" />
+          <Button text="Cancel Order" url="/cancel" />
           <Link to="/track">Track Parcel</Link>
         </div>
       ) : (
         <div>
-          <button>Change Status</button>
-          <button>Change Location</button>
+          <Button text="Change Status" url="/status" />
+          <Button text="Change Location" url="/presentLocation" />
         </div>
       )}
     </div>

@@ -4,34 +4,31 @@ export const AuthContext = createContext();
 
 export const AuthProvider = (props) => {
   const [user, setUser] = useState({
-    isAuth: "",
+    isAuth: false,
     UID: "",
     email: "",
     username: "",
     role: "",
   });
+
   const [isAuth, setIsAuth] = useState(false);
   const [parcel, setParcel] = useState("");
 
   const authUser = async () => {
-    const res = await fetch("https://mnscapi.herokuapp.com/api/v1/auth/profile", {
+    const res = await fetch("/auth/profile", {
       method: "GET",
       credentials: "include",
     })
-      .then((res) => {
-        return res.json();
-      })
+      .then((res) => res.json())
       .then((d) => {
         if (d.isAuth) {
-          setIsAuth(true);
           setUser(d);
-          console.log(d)
+          setIsAuth(d.isAuth);
         }
-        setIsAuth(false);
+        // setIsAuth(false);
       })
       .catch((er) => {
         console.log(er.message);
-        setIsAuth(false)
       });
 
     return res;
@@ -39,11 +36,21 @@ export const AuthProvider = (props) => {
 
   useEffect(() => {
     authUser();
-  }, []);
+  }
+  , []
+  );
 
   return (
-    <AuthContext.Provider value={[user,setUser,
-      isAuth, setIsAuth,parcel,setParcel]}>
+    <AuthContext.Provider
+      value={{
+        user: user,
+        setUser: setUser,
+        isAuth: isAuth,
+        setIsAuth: setIsAuth,
+        parcel: parcel,
+        setParcel: setParcel,
+      }}
+    >
       {props.children}
     </AuthContext.Provider>
   );

@@ -1,5 +1,6 @@
 {
   "name": "safe-courier-front",
+  "proxy": "https://nmscapi.herokuapp.com/api/v1",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -9,6 +10,7 @@
     "react": "^17.0.2",
     "react-cookie": "^4.0.3",
     "react-dom": "^17.0.2",
+    "react-google-maps": "^9.4.5",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",

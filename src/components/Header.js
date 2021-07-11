@@ -1,40 +1,35 @@
 import React, { useContext } from "react";
-import { Link
-  // , useHistory 
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../context/context";
 
 export default function Header() {
-  const [user] = useContext(AuthContext)
-  // const [ setUser] = useContext(AuthContext);
-  // const {setUser} = useContext(AuthContext);
-// const history = useHistory();
+  const { isAuth, setIsAuth } = useContext(AuthContext);
 
   const logout = async () => {
-    await fetch("https://mnscapi.herokuapp.com/api/v1/auth/logout", {
+    await fetch("/auth/logout", {
       method: "GET",
       credentials: "include",
-    }).then(res=> res.json()).then((d)=>{
-      // setUser({username:""})
-      // history.push("/");
-    console.log(user)
-    }).catch((er)=>console.log(er.message))
+    })
+      .then((res) => res.json())
+      .then((d) => {
+        setIsAuth(false);
+      })
+      .catch((er) => console.log(er.message));
   };
 
-  if (user.username==="") {
+  if (isAuth)
     return (
       <div className="header">
-        <Link to="/">SafECoURiEr</Link>
+        <Link to="/order">SafECoURiEr</Link>
+        <Link to="/profile">Account</Link>
+        <Link to="/" onClick={logout}>
+          Logout
+        </Link>
       </div>
     );
-  }
   return (
     <div className="header">
-      <Link to="/order">SafECoURiEr</Link>
-      <Link to="/profile">Account</Link>
-      <Link to="/" onClick={logout}>
-        Logout
-      </Link>
+      <Link to="/">SafECoURiEr</Link>
     </div>
   );
 }

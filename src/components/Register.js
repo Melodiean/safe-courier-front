@@ -39,10 +39,10 @@ export default function Register() {
         role: "admin",
       };
     } else {
-      Qdata = {...Qdata}
+      Qdata = { ...Qdata };
     }
-    
-    const url = "https://mnscapi.herokuapp.com/api/v1/auth/signup";
+
+    const url = "/auth/signup";
 
     const reqOptions = {
       method: "POST",

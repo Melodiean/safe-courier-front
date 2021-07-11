@@ -4,7 +4,7 @@ import { AuthContext } from "../context/context";
 
 function Ords() {
   const history = useHistory();
-  const [user] = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const uid = user.UID;
   const role = user.role;
   const [loading, setLoading] = useState(true);
@@ -12,28 +12,28 @@ function Ords() {
   const [ord, setOrds] = useState([]);
 
   // eslint-disable-next-line no-unused-vars
-  const {parcel, setParcel} = useContext(AuthContext);
+  const { parcel, setParcel } = useContext(AuthContext);
 
   const handleOrder = (o) => {
     let oid = o.currentTarget.id;
-    setParcel({oid});
+    setParcel({ oid });
     history.push("/details");
   };
 
   const f = async () => {
-    
+    let url;
+
+    let userUrl = `/users/${uid}/parcels`;
+
+    let adminUrl = "/parcels";
+
+    if (role === "admin") {
+      url = adminUrl;
+    } else {
+      url = userUrl;
+    }
+
     if (uid) {
-      let userUrl = `https://mnscapi.herokuapp.com/api/v1/users/${uid}/parcels`;
-  
-      let adminUrl = `https://mnscapi.herokuapp.com/api/v1/parcels`;
-  
-      let url;
-  
-      if (role === "admin") {
-        url = adminUrl;
-      } else {
-        url = userUrl;
-      }
       let res = await fetch(url, {
         headers: {
           "Content-Type": "application/json",
@@ -41,9 +41,7 @@ function Ords() {
         },
         credentials: "include",
       })
-        .then((res) => {
-          return res.json();
-        })
+        .then((res) => res.json())
         .then((data) => {
           setOrds(data);
         })
@@ -56,12 +54,13 @@ function Ords() {
     }
   };
 
-  useEffect(() => {
-    f();
-    return setLoading(true)
-  }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  ,[]
+  useEffect(
+    () => {
+      f();
+      return setLoading(true);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
   );
 
   // &&
