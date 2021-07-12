@@ -28,7 +28,7 @@ export const AuthProvider = (props) => {
         // setIsAuth(false);
       })
       .catch((er) => {
-        console.log(er.message);
+        console.log({Error:er.message});
       });
 
     return res;

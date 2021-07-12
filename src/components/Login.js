@@ -10,21 +10,21 @@ export default function Login() {
 
   const [err, setErr] = useState("");
 
-  const url = "/auth/login";
-
+  
   const userInfo = {
     email: "",
     password: "",
   };
 
   const [userData, setUserData] = useState(userInfo);
-
+  
   const handleChange = (el) => {
     const { name, value } = el.target;
     setUserData({ ...userData, [name]: value });
   };
-
+  
   const handleSubmit = (el) => {
+
     const uData = {
       email: userData.email,
       password: userData.password,
@@ -37,7 +37,7 @@ export default function Login() {
       body: JSON.stringify(uData),
     };
 
-    fetch(url, reqOptions)
+    fetch("/auth/login", reqOptions)
       .then((res) => res.json())
       .then((data) => {
         if (!data.isAuth) 
