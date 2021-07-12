@@ -42,7 +42,7 @@ export default function Register() {
       Qdata = { ...Qdata };
     }
 
-    const url = "/auth/signup";
+    const url = "https://nmscapi.herokuapp.com/api/v1/auth/signup";
 
     const reqOptions = {
       method: "POST",

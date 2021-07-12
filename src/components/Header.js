@@ -6,7 +6,7 @@ export default function Header() {
   const { isAuth, setIsAuth } = useContext(AuthContext);
 
   const logout = async () => {
-    await fetch("/auth/logout", {
+    await fetch("https://nmscapi.herokuapp.com/api/v1/auth/logout", {
       method: "GET",
       credentials: "include",
     })

@@ -23,9 +23,9 @@ function Ords() {
   const f = async () => {
     let url;
 
-    let userUrl = `/users/${uid}/parcels`;
+    let userUrl = `https://nmscapi.herokuapp.com/api/v1/users/${uid}/parcels`;
 
-    let adminUrl = "/parcels";
+    let adminUrl = "https://nmscapi.herokuapp.com/api/v1/parcels";
 
     if (role === "admin") {
       url = adminUrl;
