@@ -29,6 +29,7 @@ export const AuthProvider = (props) => {
       })
       .catch((er) => {
         console.log({Error:er.message});
+        
       });
 
     return res;
