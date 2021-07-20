@@ -19,6 +19,7 @@ function Parcel() {
   let pid = parcel.oid;
 
   const [order, setOrder] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const f = async () => {
     if (pid) {
@@ -33,6 +34,7 @@ function Parcel() {
         })
         .then((data) => {
           setOrder(data);
+          setLoading(false);
         })
         .catch((er) => console.log(er.message));
 
@@ -42,7 +44,19 @@ function Parcel() {
 
   useEffect(() => {
     f();
-  });
+    return setLoading(false);
+  }
+  
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  ,[]
+  );
+
+  if (loading)
+    return (
+      <div>
+        <p>Loading...</p>
+      </div>
+    );
 
   return (
     <div>

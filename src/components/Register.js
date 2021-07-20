@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Login from "./Login";
+import Input from "./Input";
 
 export default function Register() {
   const [isAuth, setIsAuth] = useState(false);
@@ -42,7 +43,7 @@ export default function Register() {
       Qdata = { ...Qdata };
     }
 
-    const url = "https://nmscapi.herokuapp.com/api/v1/auth/signup";
+    const url = "/auth/signup";
 
     const reqOptions = {
       method: "POST",
@@ -76,35 +77,35 @@ export default function Register() {
       <h1>Register Here!</h1>
       {err ? <p>{err}</p> : <p></p>}
       <form onSubmit={handleSubmit} autoComplete="off">
-        <input
+        <Input
           type="email"
           name="email"
-          placeholder="Email"
           value={info.email}
+          placeholder="Enter Email"
           onChange={handleChange}
         />
 
-        <input
+        <Input
           type="text"
           name="username"
-          value={info.username}
+          value={info.email}
+          placeholder="Enter Username"
           onChange={handleChange}
-          placeholder="Username"
         />
 
-        <input
+        <Input
           type="password"
           name="password"
-          placeholder="Enter Password"
           value={info.password}
+          placeholder="Enter Password"
           onChange={handleChange}
         />
 
-        <input
+        <Input
           type="password"
           name="password2"
-          placeholder="Enter Password Again"
           value={info.password2}
+          placeholder="Enter Password Again"
           onChange={handleChange}
         />
 
@@ -113,9 +114,6 @@ export default function Register() {
         <button type="submit" onClick={adminSignup}>
           ADMIN SIGNUP
         </button>
-        {/* <Link onClick={adminSignup}>
-          Register as Admin
-        </Link> */}
       </form>
     </div>
   );

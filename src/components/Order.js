@@ -2,15 +2,14 @@ import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/context";
 
-export default function Order(props) {
+export default function Order() {
   const [userData, setUserData] = useState({
     weight: "",
     destination: "",
     location: "",
   });
 
-  // eslint-disable-next-line no-unused-vars
-  const { parcel, setParcel } = useContext(AuthContext);
+  const { setParcel } = useContext(AuthContext);
   const [msg, setMsg] = useState("");
 
   const handleChange = (el) => {
@@ -32,16 +31,15 @@ export default function Order(props) {
       body: JSON.stringify(uData),
     };
 
-    fetch("https://nmscapi.herokuapp.com/api/v1/parcels", reqOptions)
+    fetch("/parcels", reqOptions)
       .then((res) => res.json())
       .then((data) => {
-        if (data.success) console.log(data);
-        setParcel(data);
+        if (data.success) setParcel(data);
         setMsg(data.message);
       })
       .catch((er) => console.log({ Error: er.message }));
 
-    // el.preventDefault();
+    el.preventDefault();
   };
 
   return (

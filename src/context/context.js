@@ -15,7 +15,7 @@ export const AuthProvider = (props) => {
   const [parcel, setParcel] = useState("");
 
   const authUser = async () => {
-    const res = await fetch("https://nmscapi.herokuapp.com/api/v1/auth/profile", {
+    const res = await fetch("/auth/profile", {
       method: "GET",
       credentials: "include",
     })
@@ -38,7 +38,7 @@ export const AuthProvider = (props) => {
   useEffect(() => {
     authUser();
   }
-  , []
+  // , []
   );
 
   return (

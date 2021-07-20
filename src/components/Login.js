@@ -1,30 +1,27 @@
-import React, { useState
-  , useContext 
-} from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/context";
 import Order from "./Order";
+import Input from "./Input";
 
 export default function Login() {
   const { isAuth, setIsAuth } = useContext(AuthContext);
 
   const [err, setErr] = useState("");
 
-  
   const userInfo = {
     email: "",
     password: "",
   };
 
   const [userData, setUserData] = useState(userInfo);
-  
+
   const handleChange = (el) => {
     const { name, value } = el.target;
     setUserData({ ...userData, [name]: value });
   };
-  
-  const handleSubmit = (el) => {
 
+  const handleSubmit = (el) => {
     const uData = {
       email: userData.email,
       password: userData.password,
@@ -37,12 +34,11 @@ export default function Login() {
       body: JSON.stringify(uData),
     };
 
-    fetch("https://nmscapi.herokuapp.com/api/v1/auth/login", reqOptions)
+    fetch("/auth/login", reqOptions)
       .then((res) => res.json())
       .then((data) => {
-        if (!data.isAuth) 
-          setErr(data.message);
-          setIsAuth(true)
+        if (!data.isAuth) setErr(data.message);
+        setIsAuth(true);
       })
       .catch((er) => {
         console.log({ Error: er.message });
@@ -58,14 +54,17 @@ export default function Login() {
       <h1>Login Here!</h1>
       <form onSubmit={handleSubmit} autoComplete="off">
         {err ? <p>{err}</p> : <span></span>}
-        <input
+
+        <Input
           type="email"
           name="email"
           value={userData.email}
           placeholder="Enter Email"
           onChange={handleChange}
         />
-        <input
+
+       
+        <Input
           type="password"
           name="password"
           value={userData.password}

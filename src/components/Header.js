@@ -3,15 +3,16 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../context/context";
 
 export default function Header() {
-  const { isAuth, setIsAuth } = useContext(AuthContext);
+  const { isAuth, setIsAuth, setUser } = useContext(AuthContext);
 
   const logout = async () => {
-    await fetch("https://nmscapi.herokuapp.com/api/v1/auth/logout", {
+    await fetch("/auth/logout", {
       method: "GET",
       credentials: "include",
     })
       .then((res) => res.json())
       .then((d) => {
+        setUser({});
         setIsAuth(false);
       })
       .catch((er) => console.log(er.message));
@@ -20,7 +21,7 @@ export default function Header() {
   if (isAuth)
     return (
       <div className="header">
-        <Link to="/order">SafECoURiEr</Link>
+        <Link to="/order">SAFECOURIER</Link>
         <Link to="/profile">Account</Link>
         <Link to="/" onClick={logout}>
           Logout
@@ -29,7 +30,7 @@ export default function Header() {
     );
   return (
     <div className="header">
-      <Link to="/">SafECoURiEr</Link>
+      <Link to="/" className="hd">SAFECOURIER</Link>
     </div>
   );
 }

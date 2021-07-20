@@ -2,6 +2,15 @@ import React, { useState, useContext, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { AuthContext } from "../context/context";
 
+function OrderBox(props) {
+  return (
+    <div className="boxod">
+      <span>{props.text}</span>
+      <span>{props.orderText}</span>
+    </div>
+  );
+}
+
 function Ords() {
   const history = useHistory();
   const { user } = useContext(AuthContext);
@@ -11,8 +20,7 @@ function Ords() {
 
   const [ord, setOrds] = useState([]);
 
-  // eslint-disable-next-line no-unused-vars
-  const { parcel, setParcel } = useContext(AuthContext);
+  const { setParcel } = useContext(AuthContext);
 
   const handleOrder = (o) => {
     let oid = o.currentTarget.id;
@@ -22,10 +30,10 @@ function Ords() {
 
   const f = async () => {
     let url;
+    let pg = "?pageNo=1&size=5";
+    let userUrl = `/users/${uid}/parcels${pg}`;
 
-    let userUrl = `https://nmscapi.herokuapp.com/api/v1/users/${uid}/parcels`;
-
-    let adminUrl = "https://nmscapi.herokuapp.com/api/v1/parcels";
+    let adminUrl = `/parcels${pg}`;
 
     if (role === "admin") {
       url = adminUrl;
@@ -71,29 +79,21 @@ function Ords() {
         <p>Loading...</p>
       </div>
     );
-  return (
+  return ord.length === 0 ? (
+    <div>
+      <p>No Orders!</p>
+    </div>
+  ) : (
     <div>
       {ord.map((od) => (
         <div key={od._id} className="boxo" id={od._id} onClick={handleOrder}>
           <div className="boxor">
             <span>{od.orderDate.substr(0, 10)}</span>
           </div>
-          <div className="boxod">
-            <span>Shipped:</span>
-            <span>{od.shipDate}</span>
-          </div>
-          <div className="boxod">
-            <span>TrackID:</span>
-            <span>{od.trackingNo}</span>
-          </div>
-          <div className="boxod">
-            <span>Weight: </span>
-            <span>{od.weight} Kg</span>
-          </div>
-          <div className="boxod">
-            <span>Price: </span>
-            <span>{od.cost} UGX</span>
-          </div>
+          <OrderBox text="Shipped:" orderText={od.shipDate} />
+          <OrderBox text="Weight:" orderText={`${od.weight} Kg`} />
+          <OrderBox text="TrackID:" orderText={od.trackingNo} />
+          <OrderBox text="Price:" orderText={`${od.cost} UGX`} />
         </div>
       ))}
     </div>

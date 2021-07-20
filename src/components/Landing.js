@@ -6,8 +6,8 @@ import delivery from "../images/delivery.png";
 import Order from "./Order";
 
 export default function Landing() {
-  const { user } = useContext(AuthContext);
-  if (user.username!=="") return <Order />;
+  const { isAuth } = useContext(AuthContext);
+  if (isAuth) return <Order />;
   return (
     <div className="land">
       <img
